@@ -1,0 +1,31 @@
+extend layout
+
+block content
+  script.
+    function checkform(){
+    if ($('#input_name').val() == '' || $('#input_username').val() == '' || $('#input_password').val() == '' || $('#input_contact').val() == '' || $('#input_email').val() == ''){
+      $('#pop_content').innerHTML = 'Please fill in all the mandatory fields.'
+      $('#pop').click();
+      return false;
+      }
+    return true;
+    };
+  #form(style="width:300px;margin:auto")
+   form#reg(onsubmit='return checkform();', action='/register', method='post')
+    h3 Register
+    .form-group
+      label Name
+      input#input_name.form-control(type='text', name='name', placeholder='Name')
+    .form-group
+      label Username
+      input#input_username.form-control(type='text', name='username', placeholder='Username')
+    .form-group
+      label Password
+      input#input_password.form-control(type='password', name='password', placeholder='Password')
+    .form-group
+      label Email
+      input#input_email.form-control(type='email', name='email', placeholder='Email')
+    .form-group
+      label Contact
+      input#input_contact.form-control(type='text', name='contact', placeholder='Contact')
+    button.btn.btn-default(type='submit' style="margin-top:20px") Create

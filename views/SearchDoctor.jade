@@ -1,0 +1,35 @@
+extends layout
+
+block content
+ .container
+  .row
+    .col-sm-4
+    form.form-inline.col-sm-4
+      .form-group
+       
+        
+        input.form-control(style='width:250px' type='text', placeholder='Doctor Name')
+      button.btn.btn-primary(type='submit')
+          span.glyphicon.glyphicon-search
+          |  Search
+  .row(style="margin-bottom:20px")
+    .col-sm-4
+    .col-sm-4(style='margin-top:10px')
+      label.radio-inline
+        input#inlineRadio1(type='radio', name='sort', value='name', checked)
+        |  Sort By Name
+      label.radio-inline(style='float:right')
+        input#inlineRadio2(type='radio', name='sort', value='rating')
+        |  Sort By Rating
+  .row
+    .col-sm-4
+      a(target='_blank', href='#')
+        .card.hovercard
+          .cardheader
+          .avatar
+            img(alt='', src='images/example.jpg')
+          .info
+            .title Name
+            .desc ShiWanFuTe
+          .bottom
+            h2 8.0
