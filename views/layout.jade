@@ -117,6 +117,10 @@ html(lang='en')
                 |  &nbsp;#{session.userprofile.name}
               ul.dropdown-menu
                 li
+                  a(href='/profile')
+                    span.glyphicon.glyphicon-th-list
+                    |  Profile
+                li
                   a(href='/logout')
                     span.glyphicon.glyphicon-off
                     |  Sign Out
@@ -137,5 +141,5 @@ html(lang='en')
                 li
                   a(href='/register') New user?
         // /.nav-collapse
-    .container
-      block content
+  .container
+    block content

@@ -69,6 +69,17 @@ router.post('/register', function(req, res, next) {
 	})
 })
 
+router.get('/profile', function(req, res, next) {
+  Appointment.find({},function(err,docs){    
+    req.session.appointment_list = docs;
+    if (req.session.doctor){
+      res.render('DoctorProfile', {'session': req.session});
+    }else{
+      res.render('UserProfile', {'session': req.session});
+    }
+  });
+});
+
 router.get('/about', function(req, res, next) {
 	req.session.popup = false;
     res.render('About', {'session': req.session});
