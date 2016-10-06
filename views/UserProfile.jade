@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  .container
+      .row
+        .col-sm-2
+        .col-sm-8
+          h3
+            span.label.label-primary Name
+            | #{session.userprofile.name}
+        .col-sm-2
+      .row
+        .col-sm-2
+        .col-sm-8
+          h3
+            span.label.label-primary Email
+            | #{session.userprofile.email}
+        .col-sm-2
+      .row
+        .col-sm-2
+        .col-sm-8
+          h3
+            span.label.label-primary Contact
+            | #{session.userprofile.contact}
+        .col-sm-2
