@@ -189,11 +189,10 @@
     padding-top: 0;
     overflow: hidden;
     text-align: center;
-    background-color: rgba(204, 255, 204, 0.3);
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .card.hovercard .cardheader {
-    background: url("/images/example.jpg");
     background-size: cover;
     height: 135px;
 }

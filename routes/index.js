@@ -9,19 +9,24 @@ var Appointment = mongoose.model("Appointment");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	if (!req.session.userprofile){
-		req.session.userprofile = undefined;
-		req.session.doctor = false;
-	}
-	req.session.popup = false;
+  Hospital.find({},function(err,docs){
+    req.session.hospital_list = docs;
+    if (!req.session.userprofile){
+      req.session.userprofile = undefined;
+      req.session.doctor = false;
+    }
+    req.session.popup = false;
     res.render('HomePage', {'session': req.session});
+  });
 });
+
 router.post('/', function(req, res, next) {
   req.session.popup = true;
   User.find({"username":req.body.username,"password":req.body.password},function(err,docs){
     if (docs[0]){
     	req.session.userprofile = docs[0];
     	req.session.popup = false;
+      console.log(req.session)
     	res.render('HomePage', {'session': req.session});
     }else{
     	Doctor.find({"username":req.body.username,"password":req.body.password},function(err,docs){
@@ -42,15 +47,22 @@ router.post('/', function(req, res, next) {
 router.get('/logout', function(req, res, next){
 	req.session.userprofile = undefined;
 	req.session.doctor = undefined;
+  req.session.destroy();
 	res.redirect('/');
 });
 router.get('/search_hospital', function(req, res, next) {
-	req.session.popup = false;
+  Hospital.find({},function(err,docs){
+    req.session.hospital_list = docs
+    req.session.popup = false;
     res.render('SearchHospital', {'session': req.session});
+  });
 });
 router.get('/search_doctor', function(req, res, next) {
-	req.session.popup = false;
+	Doctor.find({},function(err,docs){
+    req.session.doctor_list = docs
+    req.session.popup = false;
     res.render('SearchDoctor', {'session': req.session});
+  });
 });
 router.get('/register', function(req, res, next) {
 	req.session.popup = false;
@@ -79,6 +91,42 @@ router.get('/profile', function(req, res, next) {
     }
   });
 });
+
+router.get('/hospital_rating',function(req, res, next){
+  Hospital.find({}).sort({score:-1}).exec(function(err,docs){
+    console.log(err)
+    req.session.hospital_list = docs
+    req.session.popup = false;
+    res.render('SearchHospital', {'session': req.session});
+  });
+})
+
+router.get('/hospital_name',function(req, res, next){
+  Hospital.find({}).sort({name:1}).exec(function(err,docs){
+    console.log(err)
+    req.session.hospital_list = docs
+    req.session.popup = false;
+    res.render('SearchHospital', {'session': req.session});
+  });
+})
+
+router.get('/doctor_rating',function(req, res, next){
+  Doctor.find({}).sort({score:-1}).exec(function(err,docs){
+    console.log(err)
+    req.session.doctor_list = docs
+    req.session.popup = false;
+    res.render('SearchDoctor', {'session': req.session});
+  });
+})
+
+router.get('/doctor_name',function(req, res, next){
+  Doctor.find({}).sort({name:1}).exec(function(err,docs){
+    console.log(err)
+    req.session.doctor_list = docs
+    req.session.popup = false;
+    res.render('SearchDoctor', {'session': req.session});
+  });
+})
 
 router.get('/about', function(req, res, next) {
 	req.session.popup = false;

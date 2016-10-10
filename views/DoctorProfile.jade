@@ -41,14 +41,18 @@ block content
   .container
     .row
         .col-sm-2
-        .col-sm-10
-          h2(style="text-align:center") #{session.userprofile.name}'s Profile
-          br
-    
+        .col-sm-8(align="middle")
+          img.img-circle.img-responsive(src="images/#{session.userprofile.image}")
+        .col-sm-2
     .row
         .col-sm-2
-          img.img-circle.img-responsive(src="images/#{session.userprofile.photo}")
-        .col-sm-10.well.well-lg
+        .col-sm-8
+          h2(style="text-align:center") #{session.userprofile.name}'s Profile
+          br
+        .col-sm-2
+    .row
+        .col-sm-2
+        .col-sm-8.well.well-lg
          .row
           .col-sm-10
             h3
@@ -89,14 +93,36 @@ block content
               .col-sm-8
               |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.userprofile.department}
           .col-sm-2
+         .row
+          .col-sm-10
+            h3
+              .col-sm-4
+                span.label.label-primary Introduction
+              .col-sm-8
+              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.userprofile.brief_intro}
+          .col-sm-2
+         .row
+          .col-sm-10
+            h3
+              .col-sm-4
+                span.label.label-primary Score
+              .col-sm-8
+              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.userprofile.score}
+          .col-sm-2
+        .col-sm-2
     br
     br
     .row
+      .col-sm-5
       .col-sm-2
-          .form-group
-            input#inputdate.form-control(type='date', name='date')
-          button.btn.btn-info(onclick='displayTable();' style="margin-top:20px") Search Appointments
-      .col-sm-10
+        input#inputdate.form-control(type='date', name='date')
+        button.btn.btn-info(onclick='displayTable();' style="margin-top:20px") Search Appointments
+      .col-sm-5
+    br
+    br
+    .row
+      .col-sm-2          
+      .col-sm-8(style="padding:0px")
         table.table.table-bordered(style="text-align:center")
           tr.success
             th(style="text-align:center") Time
@@ -131,3 +157,4 @@ block content
           tr.warning#time17
             td 17:00-18:00
             td
+      .col-sm-2

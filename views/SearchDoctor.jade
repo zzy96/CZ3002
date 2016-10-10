@@ -9,27 +9,24 @@ block content
        
         
         input.form-control(style='width:250px' type='text', placeholder='Doctor Name')
-      button.btn.btn-primary(type='submit')
+      button.btn.btn-primary(type='submit' style='float:right')
           span.glyphicon.glyphicon-search
           |  Search
   .row(style="margin-bottom:20px")
     .col-sm-4
     .col-sm-4(style='margin-top:10px')
-      label.radio-inline
-        input#inlineRadio1(type='radio', name='sort', value='name', checked)
-        |  Sort By Name
-      label.radio-inline(style='float:right')
-        input#inlineRadio2(type='radio', name='sort', value='rating')
-        |  Sort By Rating
+        a.btn.btn-success(href="/doctor_name") Sort By Name
+        a.btn.btn-info(href="/doctor_rating" style='float:right') Sort By Rating
   .row
+   for doctor in session.doctor_list
     .col-sm-4
       a(target='_blank', href='#')
         .card.hovercard
-          .cardheader
+          .cardheader(style="background: url('/images/"+"#{doctor.hospital}"+".jpg');")
           .avatar
-            img(alt='', src='images/example.jpg')
+            img(alt='', src='images/#{doctor.image}')
           .info
-            .title Name
-            .desc ShiWanFuTe
+            .title #{doctor.name}
+            .desc(style="height:70px") #{doctor.brief_intro}
           .bottom
-            h2 8.0
+            h2 #{doctor.score}

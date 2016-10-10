@@ -20,6 +20,7 @@ module.exports = function(){
       brief_intro: String,
       department:  Array,
       image:       String,
+      score:       Number 
    },{collection:'Hospital'});
    mongoose.model("Hospital",Hospital);
 
@@ -32,15 +33,15 @@ module.exports = function(){
 	   hospital:       Number,
 	   department:     String,
 	   appointment_id: String,
-	   image:          String
+	   image:          String,
+     score:          Number,
+     brief_intro:    String
     },{collection:'Doctor'});
     mongoose.model("Doctor",Doctor);
 
     var Appointment = new Schema({
 	    appointment_id: String,
-	    year:           Number,
-	    month:          Number,
-	    day:            Number,
+	    date:           String,
 	    start_time:     Number,
 	    end_time:       Number
     },{collection:'Appointment'});

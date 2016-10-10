@@ -109,8 +109,7 @@ html(lang='en')
                 span.glyphicon.glyphicon-tag
                 |  About 101
           ul.nav.navbar-nav.navbar-right
-
-           if (session.userprofile)
+           if session.userprofile
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown')
                 span.glyphicon.glyphicon-user
