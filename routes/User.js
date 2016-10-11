@@ -8,7 +8,7 @@ module.exports = function(){
     password:       String,
     email:          String,
     contact:        String,
-    appointment_id: String
+    appointment_id: Array
   },{collection: 'User'});
   mongoose.model("User",User);
   
@@ -27,12 +27,12 @@ module.exports = function(){
    var Doctor = new Schema({
 	   name:           String,
 	   contact:        String,
-	   Email:          String,
+	   email:          String,
 	   username:       String,
 	   password:       String,
 	   hospital:       Number,
 	   department:     String,
-	   appointment_id: String,
+	   appointment_id: Array,
 	   image:          String,
      score:          Number,
      brief_intro:    String
@@ -42,8 +42,7 @@ module.exports = function(){
     var Appointment = new Schema({
 	    appointment_id: String,
 	    date:           String,
-	    start_time:     Number,
-	    end_time:       Number
+	    start_time:     Number
     },{collection:'Appointment'});
     mongoose.model("Appointment",Appointment);
 };

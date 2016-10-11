@@ -1,0 +1,68 @@
+extends layout
+
+block content
+  .container
+    .row
+        .col-sm-2
+        .col-sm-8(align="middle")
+          img.img-circle.img-responsive(width="300px" height="200px" src="/images/#{session.hospitalprofile.image}")
+        .col-sm-2
+    .row
+        .col-sm-2
+        .col-sm-8
+          h2(style="text-align:center") #{session.hospitalprofile.name}'s Profile
+          br
+        .col-sm-2
+    .row
+        .col-sm-2
+        .col-sm-8.well.well-lg
+         .row
+          .col-sm-10
+            h3
+              .col-sm-4
+                span.label.label-primary Name
+              .col-sm-8
+              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.hospitalprofile.name}
+          .col-sm-2
+         .row
+          .col-sm-10
+            h3
+              .col-sm-4
+                span.label.label-primary Introduction
+              .col-sm-8
+              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.hospitalprofile.brief_intro}
+          .col-sm-2
+         .row
+          .col-sm-10
+            h3
+              .col-sm-4
+                span.label.label-primary Department
+              .col-sm-8
+              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.hospitalprofile.department}
+          .col-sm-2
+         .row
+          .col-sm-10
+            h3
+              .col-sm-4
+                span.label.label-primary Score
+              .col-sm-8
+              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.hospitalprofile.score}
+          .col-sm-2
+        .col-sm-2
+    .row
+      .col-sm-2
+      .col-sm-8
+        #map(style='width:100%;height:500px')
+      .col-sm-2
+  script.
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: !{JSON.stringify(session)}.hospitalprofile.latitude, lng: !{JSON.stringify(session)}.hospitalprofile.longitude},
+      zoom: 14
+      });
+      var marker = new google.maps.Marker({
+        position: {lat: !{JSON.stringify(session)}.hospitalprofile.latitude, lng: !{JSON.stringify(session)}.hospitalprofile.longitude},
+        map: map,
+      });
+    }
+  script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAj9ZMqwI_aJR1RDXwAiZXHzEg1T_ZKjnY&callback=initMap')

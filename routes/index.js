@@ -92,6 +92,51 @@ router.get('/profile', function(req, res, next) {
   });
 });
 
+router.get('/booking/:doctor_id',function(req, res, next){
+  Doctor.find({_id:req.params.doctor_id},function(err,docs){
+    req.session.doctorprofile = docs[0];
+    Appointment.find({},function(err,docs){    
+      req.session.appointment_list = docs;
+      res.render('Booking',{'session': req.session});
+    });
+  })
+})
+
+router.post('/book_success',function(req, res, next){
+  var appointment = new Appointment({appointment_id: (new Date()).valueOf(), start_time:req.body.start_time, date: req.body.date});
+  appointment.save(function(err){
+    console.log(req.session.userprofile.username)
+        User.findOne({username: req.session.userprofile.username, password: req.session.userprofile.password}, function (err, doc){
+          console.log("doc:"+doc)
+          var appointment_list;
+          if (!doc.appointment_id){
+            appointment_list = [];
+          }else{
+            appointment_list = doc.appointment_id;
+          }
+          appointment_list.push(appointment.appointment_id)
+          console.log("appointment: "+appointment_list)
+          doc.appointment_id = appointment_list;
+          console.log(doc)
+          doc.save();
+          Doctor.findOne({username: req.session.doctorprofile.username, password: req.session.doctorprofile.password},function(err,doc){
+            var appointment_list;
+            if (!doc.appointment_id){
+              appointment_list = [];
+            }else{
+              appointment_list = doc.appointment_id;
+            }
+            appointment_list.push(appointment.appointment_id);
+            doc.appointment_id = appointment_list;
+            doc.save();
+            req.session.popup = false;
+            res.render('BookingSuccess', {'session': req.session});
+          });
+        })
+  })
+})
+
+
 router.get('/hospital_rating',function(req, res, next){
   Hospital.find({}).sort({score:-1}).exec(function(err,docs){
     console.log(err)
@@ -126,6 +171,13 @@ router.get('/doctor_name',function(req, res, next){
     req.session.popup = false;
     res.render('SearchDoctor', {'session': req.session});
   });
+})
+
+router.get('/hospital/:hospital_id',function(req, res, next){
+  Hospital.findOne({_id:req.params.hospital_id},function(err,doc){
+    req.session.hospitalprofile = doc;
+      res.render('Hospital',{'session': req.session});
+  })
 })
 
 router.get('/about', function(req, res, next) {

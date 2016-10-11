@@ -38,12 +38,12 @@ block content
         });
       var infowindow;
       for (var m in markers){
-        infowindow = new google.maps.InfoWindow({content:
-          "<a target='_blank', href='#'><h3>"+hospital_list[m].name+" "+hospital_list[m].score+"</h3><p>"+hospital_list[m].brief_intro+"</p></a>",
+        markers[m].infowindow = new google.maps.InfoWindow({content:
+          "<a href='/hospital/"+hospital_list[m]._id+"'><h3>"+hospital_list[m].name+" "+hospital_list[m].score+"</h3><p>"+hospital_list[m].brief_intro+"</p></a>",
           maxWidth:150
           });
         markers[m].addListener('click',function(){
-          infowindow.open(map,markers[m]);
+          this.infowindow.open(map,this);
         });
       }
 

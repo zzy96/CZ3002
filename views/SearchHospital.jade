@@ -1,17 +1,26 @@
 extends layout
 
 block content
+ script.
+  function search(){
+    var hospital_list = !{JSON.stringify(session)}.hospital_list
+    var search_input=document.getElementById('search_input').value
+    for (i in hospital_list){
+      document.getElementById(hospital_list[i]._id).style.display = "inline"
+      if ((hospital_list[i].name).indexOf(search_input) == -1){
+        document.getElementById(hospital_list[i]._id).style.display = "none"
+      }
+    }
+  }
  .container
   .row
     .col-sm-4
-    form.form-inline.col-sm-4
+    .form-inline.col-sm-4
       .form-group
-       
-        
-        input.form-control(style='width:250px' type='text', placeholder='Hospital Name')
-      button.btn.btn-primary(type='submit' style='float:right')
-          span.glyphicon.glyphicon-search
-          |  Search
+        input.form-control#search_input(style='width:250px' type='text', placeholder='Hospital Name')
+      button.btn.btn-primary(onclick='search();' style='float:right')
+        span.glyphicon.glyphicon-search
+        |  Search
   .row(style="margin-bottom:20px")
     .col-sm-4
     .col-sm-4(style='margin-top:10px')
@@ -19,10 +28,10 @@ block content
         a.btn.btn-info(href="/hospital_rating" style='float:right') Sort By Rating
   .row
    for hospital in session.hospital_list
-    .col-sm-4
-      a(target='_blank', href='#')
+    .col-sm-4(id=hospital._id)
+      a(href='/hospital/#{hospital._id}')
         .card.hovercard
-          .cardheader(style="background: url('/images/"+"#{hospital.image}"+"');")
+          .cardheader(style="background: url('/images/#{hospital.image}');")
           .avatar
             img(alt='', src='images/#{hospital.image}')
           .info

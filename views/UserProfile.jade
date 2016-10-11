@@ -1,25 +1,125 @@
 extends layout
 
 block content
+  script.
+    $(document).ready(function(){
+      var date = new Date();
+      var year = date.getFullYear();
+      var month = date.getMonth()+1;
+      if (month<10){
+        month = '0'+month;
+      }
+      var day = date.getDate();
+      if (day<10){
+        day = '0'+day;
+      }
+      document.getElementById('inputdate').value = year+'-'+month+'-'+day;
+      displayTable();
+    });
+    var app_list = [];
+    var full_app_list = !{JSON.stringify(session)}.appointment_list;
+    var user_app_list = !{JSON.stringify(session)}.userprofile.appointment_id
+    for (var app_id in user_app_list){
+      for (var app in full_app_list){
+        if (full_app_list[app].appointment_id == user_app_list[app_id]){
+          app_list.push(full_app_list[app]);
+        }        
+      }
+    }
+  script.
+    function displayTable(){
+      for (var i=8;i<=17;i++){
+        document.getElementById('time'+i).className = "warning";
+        document.getElementById('time'+i).childNodes[1].innerHTML = "Available"
+          }
+      var date = document.getElementById('inputdate').value;
+      for (var app in app_list){
+        if (app_list[app].date == date){
+          document.getElementById('time'+app_list[app].start_time).className = "danger";
+          document.getElementById('time'+app_list[app].start_time).childNodes[1].innerHTML = "Booked"
+          }
+        }
+    }
   .container
-      .row
+    .row
         .col-sm-2
         .col-sm-8
-          h3
-            span.label.label-primary Name
-            | #{session.userprofile.name}
+          h2(style="text-align:center") #{session.userprofile.name}'s Profile
+          br
         .col-sm-2
-      .row
+    .row
         .col-sm-2
-        .col-sm-8
-          h3
-            span.label.label-primary Email
-            | #{session.userprofile.email}
+        .col-sm-8.well.well-lg
+         .row
+          .col-sm-10
+            h3
+              .col-sm-4
+                span.label.label-primary Name
+              .col-sm-8
+              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.userprofile.name}
+          .col-sm-2
+         .row
+          .col-sm-10
+            h3
+              .col-sm-4
+                span.label.label-primary Email
+              .col-sm-8
+              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.userprofile.email}
+          .col-sm-2
+         .row
+          .col-sm-10
+            h3
+              .col-sm-4
+                span.label.label-primary Contact
+              .col-sm-8
+              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.userprofile.contact}
+          .col-sm-2
         .col-sm-2
-      .row
-        .col-sm-2
-        .col-sm-8
-          h3
-            span.label.label-primary Contact
-            | #{session.userprofile.contact}
-        .col-sm-2
+    br
+    br
+    .row
+      .col-sm-5
+      .col-sm-2
+        input#inputdate.form-control(type='date', name='date')
+        button.btn.btn-info(onclick='displayTable();' style="margin-top:20px") Search Appointments
+      .col-sm-5
+    br
+    br
+    .row
+      .col-sm-2          
+      .col-sm-8(style="padding:0px")
+        table.table.table-bordered(style="text-align:center")
+          tr.success
+            th(style="text-align:center") Time
+            th(style="text-align:center") Appointment Status
+          tr.warning#time8
+            td 8:00-9:00
+            td
+          tr.warning#time9
+            td 9:00-10:00
+            td
+          tr.warning#time10
+            td 10:00-11:00
+            td
+          tr.warning#time11
+            td 11:00-12:00
+            td
+          tr.warning#time12
+            td 12:00-13:00
+            td
+          tr.warning#time13
+            td 13:00-14:00
+            td
+          tr.warning#time14
+            td 14:00-15:00
+            td
+          tr.warning#time15
+            td 15:00-16:00
+            td
+          tr.warning#time16
+            td 16:00-17:00
+            td
+          tr.warning#time17
+            td 17:00-18:00
+            td
+      .col-sm-2

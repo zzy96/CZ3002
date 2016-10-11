@@ -1,17 +1,26 @@
 extends layout
 
 block content
+ script.
+  function search(){
+    var doctor_list = !{JSON.stringify(session)}.doctor_list
+    var search_input=document.getElementById('search_input').value
+    for (i in doctor_list){
+      document.getElementById(doctor_list[i]._id).style.display = "inline"
+      if ((doctor_list[i].name).indexOf(search_input) == -1){
+        document.getElementById(doctor_list[i]._id).style.display = "none"
+      }
+    }
+  }
  .container
   .row
     .col-sm-4
-    form.form-inline.col-sm-4
+    .form-inline.col-sm-4
       .form-group
-       
-        
-        input.form-control(style='width:250px' type='text', placeholder='Doctor Name')
-      button.btn.btn-primary(type='submit' style='float:right')
-          span.glyphicon.glyphicon-search
-          |  Search
+        input.form-control#search_input(style='width:250px' type='text', placeholder='Doctor Name')
+      button.btn.btn-primary(onclick='search();' style='float:right')
+        span.glyphicon.glyphicon-search
+        |  Search
   .row(style="margin-bottom:20px")
     .col-sm-4
     .col-sm-4(style='margin-top:10px')
@@ -19,8 +28,8 @@ block content
         a.btn.btn-info(href="/doctor_rating" style='float:right') Sort By Rating
   .row
    for doctor in session.doctor_list
-    .col-sm-4
-      a(target='_blank', href='#')
+    .col-sm-4(id=doctor._id)
+      a(href='/Booking/'+'#{doctor._id}')
         .card.hovercard
           .cardheader(style="background: url('/images/"+"#{doctor.hospital}"+".jpg');")
           .avatar
