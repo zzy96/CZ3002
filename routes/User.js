@@ -20,7 +20,9 @@ module.exports = function(){
       brief_intro: String,
       department:  Array,
       image:       String,
-      score:       Number 
+      score:       Number,
+      count:       Number,
+      address:     String
    },{collection:'Hospital'});
    mongoose.model("Hospital",Hospital);
 
@@ -31,11 +33,13 @@ module.exports = function(){
 	   username:       String,
 	   password:       String,
 	   hospital:       Number,
+     hospital_name:  String,
 	   department:     String,
 	   appointment_id: Array,
 	   image:          String,
      score:          Number,
-     brief_intro:    String
+     brief_intro:    String,
+     count:          Number
     },{collection:'Doctor'});
     mongoose.model("Doctor",Doctor);
 

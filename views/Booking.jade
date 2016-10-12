@@ -39,17 +39,33 @@ block content
         }
       }
     }
+    function checkLogin2(time){
+      if (!{JSON.stringify(session)}.userprofile === undefined){
+        $('#pop_content').html('Please login to cancel booking.');
+        $('#pop').click();
+      }else{
+        if (confirm("Sure you want to cancel booking?")){
+          for (var app in app_list){
+            if (app_list[app].date == document.getElementById('inputdate').value && app_list[app].start_time == time){
+              document.getElementById('cancel_doctor').value = app_list[app].appointment_id;
+              $('#cancel_appointment').click();
+            }
+          }
+        }
+      }
+    }
     function displayTable(){
       for (var i=8;i<=17;i++){
         document.getElementById('time'+i).className = "warning";
         document.getElementById('atime'+i).style.display = "inline";
+        document.getElementById('ctime'+i).style.display = "none";
           }
       var date = document.getElementById('inputdate').value;
       for (var app in app_list){
         if (app_list[app].date == date){
           document.getElementById('time'+app_list[app].start_time).className = "danger";
           document.getElementById('atime'+app_list[app].start_time).style.display = "none";
-          document.getElementById('atime'+app_list[app].start_time).parentNode.innerHTML = "Booked"
+          document.getElementById('ctime'+app_list[app].start_time).style.display = "inline";
         }
       }
     }
@@ -57,7 +73,7 @@ block content
     .row
         .col-sm-2
         .col-sm-8(align="middle")
-          img.img-circle.img-responsive(src="/images/#{session.doctorprofile.image}")
+          img.img-circle.img-responsive(width="300px" height="200px" src="/images/#{session.doctorprofile.image}")
         .col-sm-2
     .row
         .col-sm-2
@@ -74,7 +90,7 @@ block content
               .col-sm-4
                 span.label.label-primary Name
               .col-sm-8
-              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.doctorprofile.name}
+                |  #{session.doctorprofile.name}
           .col-sm-2
          .row
           .col-sm-10
@@ -82,7 +98,7 @@ block content
               .col-sm-4
                 span.label.label-primary Email
               .col-sm-8
-              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.doctorprofile.email}
+                |  #{session.doctorprofile.email}
           .col-sm-2
          .row
           .col-sm-10
@@ -90,7 +106,7 @@ block content
               .col-sm-4
                 span.label.label-primary Contact
               .col-sm-8
-              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.doctorprofile.contact}
+                |  #{session.doctorprofile.contact}
           .col-sm-2
          .row
           .col-sm-10
@@ -98,7 +114,7 @@ block content
               .col-sm-4
                 span.label.label-primary Hospital
               .col-sm-8
-              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.doctorprofile.hospital}
+                |  #{session.doctorprofile.hospital_name}
           .col-sm-2
          .row
           .col-sm-10
@@ -106,7 +122,7 @@ block content
               .col-sm-4
                 span.label.label-primary Department
               .col-sm-8
-              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.doctorprofile.department}
+                |  #{session.doctorprofile.department}
           .col-sm-2
          .row
           .col-sm-10
@@ -114,7 +130,7 @@ block content
               .col-sm-4
                 span.label.label-primary Introduction
               .col-sm-8
-              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.doctorprofile.brief_intro}
+                |  #{session.doctorprofile.brief_intro}
           .col-sm-2
          .row
           .col-sm-10
@@ -122,16 +138,20 @@ block content
               .col-sm-4
                 span.label.label-primary Score
               .col-sm-8
-              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.doctorprofile.score}
+                |  #{session.doctorprofile.score}
           .col-sm-2
     br
     br
     .row
-      .col-sm-5
+      .col-sm-4
       .col-sm-2
-        input#inputdate.form-control(type='date', name='date')
+       form(method="post") 
+        input#inputrate.form-control(type='text' name='rate' style="width:100px" placeholder="0-10")
+        button.btn.btn-info(type='submit' style="margin-top:20px") Rate
+      .col-sm-2
+        input#inputdate.form-control(type='date' name='date')
         button.btn.btn-info(onclick='displayTable();' style="margin-top:20px") Search Appointments
-      .col-sm-5
+      .col-sm-4
     br
     br
     .row
@@ -145,44 +165,57 @@ block content
             td 8:00-9:00
             td
               a#atime8.btn.btn-xs.btn-default(onclick="checkLogin(8);") Make Appointment
+              a#ctime8.btn.btn-xs.btn-default(onclick="checkLogin2(8);") Cancel Booking
           tr.warning#time9
             td 9:00-10:00
             td
               a#atime9.btn.btn-xs.btn-default(onclick="checkLogin(9);") Make Appointment
+              a#ctime9.btn.btn-xs.btn-default(onclick="checkLogin2(9);") Cancel Booking
           tr.warning#time10
             td 10:00-11:00
             td
               a#atime10.btn.btn-xs.btn-default(onclick="checkLogin(10);") Make Appointment
+              a#ctime10.btn.btn-xs.btn-default(onclick="checkLogin2(10);") Cancel Booking
           tr.warning#time11
             td 11:00-12:00
             td
               a#atime11.btn.btn-xs.btn-default(onclick="checkLogin(11);") Make Appointment
+              a#ctime11.btn.btn-xs.btn-default(onclick="checkLogin2(11);") Cancel Booking
           tr.warning#time12
             td 12:00-13:00
             td
               a#atime12.btn.btn-xs.btn-default(onclick="checkLogin(12);") Make Appointment
+              a#ctime12.btn.btn-xs.btn-default(onclick="checkLogin2(12);") Cancel Booking
           tr.warning#time13
             td 13:00-14:00
             td
               a#atime13.btn.btn-xs.btn-default(onclick="checkLogin(13);") Make Appointment
+              a#ctime13.btn.btn-xs.btn-default(onclick="checkLogin2(13);") Cancel Booking
           tr.warning#time14
             td 14:00-15:00
             td
               a#atime14.btn.btn-xs.btn-default(onclick="checkLogin(14);") Make Appointment
+              a#ctime14.btn.btn-xs.btn-default(onclick="checkLogin2(14);") Cancel Booking
           tr.warning#time15
             td 15:00-16:00
             td
               a#atime15.btn.btn-xs.btn-default(onclick="checkLogin(15);") Make Appointment
+              a#ctime15.btn.btn-xs.btn-default(onclick="checkLogin2(15);") Cancel Booking
           tr.warning#time16
             td 16:00-17:00
             td
               a#atime16.btn.btn-xs.btn-default(onclick="checkLogin(16);") Make Appointment
+              a#ctime16.btn.btn-xs.btn-default(onclick="checkLogin2(16);") Cancel Booking
           tr.warning#time17
             td 17:00-18:00
             td
               a#atime17.btn.btn-xs.btn-default(onclick="checkLogin(17);") Make Appointment
+              a#ctime17.btn.btn-xs.btn-default(onclick="checkLogin2(17);") Cancel Booking
       .col-sm-2
         form(action="/book_success" method="post" style="display:none")
           input#submit_time(name="start_time")
           input#submit_date(name="date")
           button#submit_appointment(type="submit")
+        form(action="/book_cancel" method="post" style="display:none")
+          input#cancel_doctor(name="appointment_id")
+          button#cancel_appointment(type="submit")

@@ -21,34 +21,59 @@ block content
             h3
               .col-sm-4
                 span.label.label-primary Name
-              .col-sm-8
-              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.hospitalprofile.name}
+              .col-sm-1
+                |  :
+              .col-sm-7
+                |  #{session.hospitalprofile.name}
+          .col-sm-2
+         .row
+          .col-sm-10
+            h3
+              .col-sm-4
+                span.label.label-primary Address
+              .col-sm-1
+                |  :
+              .col-sm-7
+                |  #{session.hospitalprofile.address}
           .col-sm-2
          .row
           .col-sm-10
             h3
               .col-sm-4
                 span.label.label-primary Introduction
-              .col-sm-8
-              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.hospitalprofile.brief_intro}
+              .col-sm-1
+                |  :
+              .col-sm-7
+                |  #{session.hospitalprofile.brief_intro}
           .col-sm-2
          .row
           .col-sm-10
             h3
               .col-sm-4
                 span.label.label-primary Department
-              .col-sm-8
-              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.hospitalprofile.department}
+              .col-sm-1
+                |  :
+              .col-sm-7
+                |  #{session.hospitalprofile.department}
           .col-sm-2
          .row
           .col-sm-10
             h3
               .col-sm-4
                 span.label.label-primary Score
-              .col-sm-8
-              |  :&nbsp;&nbsp;&nbsp;&nbsp;#{session.hospitalprofile.score}
+              .col-sm-1
+                |  :
+              .col-sm-7
+                |  #{session.hospitalprofile.score}
           .col-sm-2
         .col-sm-2
+    .row
+      .col-sm-5
+      .col-sm-2
+        form.form-inline(method="post") 
+          input#inputrate.form-control(type='text' name='rate' style="width:90px" placeholder="0-10")
+          button.btn.btn-info(type='submit' style="margin-left:10px;margin-top:20px;margin-bottom:20px") Rate
+      .col-sm-5
     .row
       .col-sm-2
       .col-sm-8

@@ -136,6 +136,48 @@ router.post('/book_success',function(req, res, next){
   })
 })
 
+router.post('/book_cancel',function(req, res, next){
+  Appointment.remove({ appointment_id: req.body.appointment_id }, function(err) {
+    var appointment_id = req.body.appointment_id
+    console.log(req.session.userprofile.username)
+        User.findOne({username: req.session.userprofile.username, password: req.session.userprofile.password}, function (err, doc){
+          console.log("doc:"+doc)
+          var appointment_list;
+          if (!doc.appointment_id){
+            appointment_list = [];
+          }else{
+            appointment_list = doc.appointment_id;
+          }
+          appointment_list.pop(appointment_id)
+          console.log("appointment: "+appointment_list)
+          doc.appointment_id = appointment_list;
+          console.log(doc)
+          doc.save();
+          Doctor.findOne({username: req.session.doctorprofile.username, password: req.session.doctorprofile.password},function(err,doc){
+            var appointment_list;
+            if (!doc.appointment_id){
+              appointment_list = [];
+            }else{
+              appointment_list = doc.appointment_id;
+            }
+            appointment_list.pop(appointment_id);
+            doc.appointment_id = appointment_list;
+            doc.save();
+            req.session.popup = false;
+            res.redirect("/booking/"+doc._id)
+          });
+        })
+  })
+})
+
+router.post('/booking/:doctor_id', function(req, res, next){
+  Doctor.findOne({_id: req.params.doctor_id}, function (err, doc){
+    doc.score = Math.round(10*(doc.score*doc.count+parseInt(req.body.rate))/(doc.count+1))/10
+    doc.count++;
+    doc.save();
+    res.redirect('/booking/'+req.params.doctor_id.toString())
+  })
+})
 
 router.get('/hospital_rating',function(req, res, next){
   Hospital.find({}).sort({score:-1}).exec(function(err,docs){
@@ -177,6 +219,15 @@ router.get('/hospital/:hospital_id',function(req, res, next){
   Hospital.findOne({_id:req.params.hospital_id},function(err,doc){
     req.session.hospitalprofile = doc;
       res.render('Hospital',{'session': req.session});
+  })
+})
+
+router.post('/hospital/:hospital_id', function(req, res, next){
+  Hospital.findOne({_id: req.params.hospital_id}, function (err, doc){
+    doc.score = Math.round(10*(doc.score*doc.count+parseInt(req.body.rate))/(doc.count+1))/10
+    doc.count++;
+    doc.save();
+    res.redirect('/hospital/'+req.params.hospital_id.toString())
   })
 })
 

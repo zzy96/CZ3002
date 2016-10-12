@@ -28,8 +28,21 @@ block content
         a.btn.btn-info(href="/doctor_rating" style='float:right') Sort By Rating
   .row
    for doctor in session.doctor_list
-    .col-sm-4(id=doctor._id)
+    if !session.doctor
+     .col-sm-4(id=doctor._id)
       a(href='/Booking/'+'#{doctor._id}')
+        .card.hovercard
+          .cardheader(style="background: url('/images/"+"#{doctor.hospital}"+".jpg');")
+          .avatar
+            img(alt='', src='images/#{doctor.image}')
+          .info
+            .title #{doctor.name}
+            .desc(style="height:70px") #{doctor.brief_intro}
+          .bottom
+            h2 #{doctor.score}
+    else
+     .col-sm-4(id=doctor._id)
+      a(href='#')
         .card.hovercard
           .cardheader(style="background: url('/images/"+"#{doctor.hospital}"+".jpg');")
           .avatar
