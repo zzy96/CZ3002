@@ -97,7 +97,10 @@ router.get('/booking/:doctor_id',function(req, res, next){
     req.session.doctorprofile = docs[0];
     Appointment.find({},function(err,docs){    
       req.session.appointment_list = docs;
-      res.render('Booking',{'session': req.session});
+      User.findOne({username: req.session.userprofile.username, password: req.session.userprofile.password},function(err,doc){
+        req.session.userprofile = doc
+        res.render('Booking',{'session': req.session});
+      })
     });
   })
 })
@@ -175,7 +178,10 @@ router.post('/booking/:doctor_id', function(req, res, next){
     doc.score = Math.round(10*(doc.score*doc.count+parseInt(req.body.rate))/(doc.count+1))/10
     doc.count++;
     doc.save();
-    res.redirect('/booking/'+req.params.doctor_id.toString())
+    User.findOne({username: req.session.userprofile.username, password: req.session.userprofile.password},function(err,doc){
+      req.session.userprofile = doc
+      res.redirect('/booking/'+req.params.doctor_id.toString())
+    })
   })
 })
 

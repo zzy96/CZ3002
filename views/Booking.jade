@@ -59,13 +59,25 @@ block content
         document.getElementById('time'+i).className = "warning";
         document.getElementById('atime'+i).style.display = "inline";
         document.getElementById('ctime'+i).style.display = "none";
+        document.getElementById('time'+i).childNodes[1].childNodes[2].innerHTML = "";
           }
       var date = document.getElementById('inputdate').value;
       for (var app in app_list){
         if (app_list[app].date == date){
           document.getElementById('time'+app_list[app].start_time).className = "danger";
-          document.getElementById('atime'+app_list[app].start_time).style.display = "none";
-          document.getElementById('ctime'+app_list[app].start_time).style.display = "inline";
+          console.log(!{JSON.stringify(session)}.userprofile)
+          console.log(app_list[app].appointment_id.toString())
+          if (!{JSON.stringify(session)}.userprofile && !{JSON.stringify(session)}.userprofile.appointment_id.indexOf(app_list[app].appointment_id.toString()) != -1){
+            console.log("hello")
+            document.getElementById('atime'+app_list[app].start_time).style.display = "none";
+            document.getElementById('ctime'+app_list[app].start_time).style.display = "inline";
+            document.getElementById('time'+app_list[app].start_time).childNodes[1].childNodes[2].innerHTML = "";
+          }else{
+            console.log("world")
+            document.getElementById('atime'+app_list[app].start_time).style.display = "none";
+            document.getElementById('ctime'+app_list[app].start_time).style.display = "none";
+            document.getElementById('time'+app_list[app].start_time).childNodes[1].childNodes[2].innerHTML = "Booked";
+          }
         }
       }
     }
@@ -166,51 +178,61 @@ block content
             td
               a#atime8.btn.btn-xs.btn-default(onclick="checkLogin(8);") Make Appointment
               a#ctime8.btn.btn-xs.btn-default(onclick="checkLogin2(8);") Cancel Booking
+              p
           tr.warning#time9
             td 9:00-10:00
             td
               a#atime9.btn.btn-xs.btn-default(onclick="checkLogin(9);") Make Appointment
               a#ctime9.btn.btn-xs.btn-default(onclick="checkLogin2(9);") Cancel Booking
+              p
           tr.warning#time10
             td 10:00-11:00
             td
               a#atime10.btn.btn-xs.btn-default(onclick="checkLogin(10);") Make Appointment
               a#ctime10.btn.btn-xs.btn-default(onclick="checkLogin2(10);") Cancel Booking
+              p
           tr.warning#time11
             td 11:00-12:00
             td
               a#atime11.btn.btn-xs.btn-default(onclick="checkLogin(11);") Make Appointment
               a#ctime11.btn.btn-xs.btn-default(onclick="checkLogin2(11);") Cancel Booking
+              p
           tr.warning#time12
             td 12:00-13:00
             td
               a#atime12.btn.btn-xs.btn-default(onclick="checkLogin(12);") Make Appointment
               a#ctime12.btn.btn-xs.btn-default(onclick="checkLogin2(12);") Cancel Booking
+              p
           tr.warning#time13
             td 13:00-14:00
             td
               a#atime13.btn.btn-xs.btn-default(onclick="checkLogin(13);") Make Appointment
               a#ctime13.btn.btn-xs.btn-default(onclick="checkLogin2(13);") Cancel Booking
+              p
           tr.warning#time14
             td 14:00-15:00
             td
               a#atime14.btn.btn-xs.btn-default(onclick="checkLogin(14);") Make Appointment
               a#ctime14.btn.btn-xs.btn-default(onclick="checkLogin2(14);") Cancel Booking
+              p
           tr.warning#time15
             td 15:00-16:00
             td
               a#atime15.btn.btn-xs.btn-default(onclick="checkLogin(15);") Make Appointment
               a#ctime15.btn.btn-xs.btn-default(onclick="checkLogin2(15);") Cancel Booking
+              p
           tr.warning#time16
             td 16:00-17:00
             td
               a#atime16.btn.btn-xs.btn-default(onclick="checkLogin(16);") Make Appointment
               a#ctime16.btn.btn-xs.btn-default(onclick="checkLogin2(16);") Cancel Booking
+              p
           tr.warning#time17
             td 17:00-18:00
             td
               a#atime17.btn.btn-xs.btn-default(onclick="checkLogin(17);") Make Appointment
               a#ctime17.btn.btn-xs.btn-default(onclick="checkLogin2(17);") Cancel Booking
+              p
       .col-sm-2
         form(action="/book_success" method="post" style="display:none")
           input#submit_time(name="start_time")
