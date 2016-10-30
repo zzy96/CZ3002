@@ -1,5 +1,5 @@
-# CZ3002new
+# CZ3002
 
-This is a course project for patients to make appointments online with doctors and rate.
+This is a course project aims to provide an online platform for patients making appointments with doctors and rating.
 
-The database file is not uploaded.
+The MongoDB file is not uploaded, but the schema can be seen in the mongoose definition.
